@@ -29,6 +29,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.littletonrobotics.junction.Logger;
 
 public class TestTalonFxMotorSim implements AutoCloseable {
   static final double DELTA = 1e-3; // acceptable deviation range
@@ -82,6 +83,8 @@ public class TestTalonFxMotorSim implements AutoCloseable {
   @BeforeEach
   public void constructDevices() {
     assert HAL.initialize(500, 0);
+
+    Logger.getInstance().start();
 
     /* create the TalonFX */
     m_driveMotor = new TalonFX(0);
