@@ -4,14 +4,32 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import org.littletonrobotics.junction.LoggedRobot;
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.networktables.NT4Publisher;
 
-public class Robot extends TimedRobot {
+public class Robot extends LoggedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+
+  public Robot() {
+    super();
+    Logger.getInstance().recordMetadata("ProjectName", "MyProject"); // Set a metadata value
+
+    Logger.getInstance().addDataReceiver(new NT4Publisher());
+    if (!isReal()) {
+      setUseTiming(false); // Run as fast as possible
+    }
+
+    // Logger.getInstance().disableDeterministicTimestamps() // See "Deterministic Timestamps" in
+    // the "Understanding Data Flow" page
+    Logger.getInstance()
+        .start(); // Start logging! No more data receivers, replay sources, or metadata values may
+    // be added.
+  }
 
   @Override
   public void robotInit() {
